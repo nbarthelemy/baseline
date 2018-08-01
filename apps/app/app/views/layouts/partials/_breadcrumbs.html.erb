@@ -1,0 +1,11 @@
+<% if breadcrumbs? %>
+<nav aria-label="breadcrumb" role="navigation">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="<%= try(:breakpoint_classes) || 'col' %>">
+        <%= breadcrumbs style: :bootstrap %>
+      </div>
+    </div>
+  </div>
+</nav>
+<% end %>

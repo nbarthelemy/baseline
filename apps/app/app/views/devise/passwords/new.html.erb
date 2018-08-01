@@ -1,0 +1,22 @@
+<div class="mb-4">
+  <h2 class="mb-2">Forgot your password?</h2>
+  <span>Enter your email address to reset it</span>
+</div>
+<div class="row no-gutters justify-content-center">
+  <%= form_for(resource, as: resource_name, url: password_path(resource_name),
+    html: { method: :post, class: 'text-left col-lg-8' }) do |f| %>
+
+    <%= devise_error_messages! %>
+
+    <div class="form-group">
+      <%= f.label :email, 'Email Address' %><br />
+      <%= f.email_field :email, autofocus: true, autocomplete: "email",
+        class: 'form-control form-control-lg', placeholder: 'Email Address' %>
+    </div>
+    <div class="text-center mb-4">
+      <%= f.submit "Reset password", class: 'btn btn-primary btn-lg' %>
+    </div>
+  <% end %>
+</div>
+
+<%= render "devise/shared/log_in_link" %>

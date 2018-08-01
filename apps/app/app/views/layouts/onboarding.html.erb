@@ -1,0 +1,37 @@
+<% head do %>
+  <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+<% end %>
+<%= body do %>
+  <div class="nav-container"></div>
+  <div class="main-container">
+    <section class="space-sm">
+      <div class="container align-self-start">
+        <div class="row mb-4">
+          <div class="col text-center">
+            <%= link_to main_app.root_url do -%>
+              <img alt="Image" src="<%= asset_pack_path 'images/wingman/logo-gray.svg' %>" />
+            <%- end %>
+          </div>
+        </div>
+
+        <%= render partial: 'layouts/partials/breadcrumbs', locals: {
+          breakpoint_classes: 'col-12 col-lg-10'
+        } %>
+
+        <div class="row justify-content-center">
+          <div class="col-12 col-lg-10">
+            <div class="card card-lg">
+              <div class="card-body">
+                <%= yield %>
+              </div>
+            </div>
+            <div class="text-center">
+              <span class="text-small">Already down with the basics? <a href="#">Skip this</a></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+  <% before_body_end javascript_pack_tag 'application' %>
+<% end %>

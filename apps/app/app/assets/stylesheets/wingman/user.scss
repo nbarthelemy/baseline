@@ -1,0 +1,124 @@
+//
+//
+// user.scss
+//
+// Place your own custom CSS or SCSS rules below this line, these rules will override any Bootstrap and theme variables.
+
+.preload * {
+	transition: none !important;
+  -webkit-transition: none !important;
+  -moz-transition: none !important;
+  -ms-transition: none !important;
+  -o-transition: none !important;
+}
+
+.preload {
+	label, input { opacity: 0; }
+}
+
+.form-group {
+  position: relative;
+  margin-bottom: $input-custom-spacing + 0.25rem;
+
+  /**
+  * Add a transition to the label and input.
+  * I'm not even sure that touch-action: manipulation works on
+  * inputs, but hey, it's new and cool and could remove the
+  * pesky delay.
+  */
+  label, input {
+  	opacity: 1;
+    transition: all 0.2s;
+    touch-action: manipulation;
+    background-color: transparent;
+  }
+
+  label {
+  	position: absolute;
+  	padding: 0;
+    margin: 0;
+    margin-top: $input-custom-spacing;
+    z-index: 1;
+
+  	font-size: 0.85rem;
+  	font-weight: 400;
+  	letter-spacing: .04em;
+  	color: #777;
+
+    line-height: $input-btn-line-height;
+  }
+
+  input.form-control {
+  	border-top: none;
+  	border-right: none;
+  	border-left: none;
+  	border-radius: 0;
+
+  	padding-left: 0.04rem;
+    padding-right: 0.04rem;
+    padding-bottom: 0 !important;
+
+  	padding-top: $input-custom-spacing !important;
+
+		z-index: 0;
+
+	  &.form-control-sm {}
+	  &.form-control-lg {
+	  	padding-top: 1.25rem !important;
+	  }
+
+  	&::placeholder {
+			transition: opacity 0.1s 0.1s ease;
+			opacity: 0;
+		}
+
+	  &:focus {
+		  color: #495057;
+  		background-color: transparent;
+  		border-color: #b9d0f8;
+  		outline: 0;
+  		-webkit-box-shadow: none;
+  		box-shadow: none;
+
+	  	&::placeholder {
+	  		opacity: 1;
+			}
+		}
+  }
+
+  &.focused {
+  	label {
+	  	padding: 0;
+	    margin: 0;
+	    line-height: $input-btn-line-height;
+	    z-index: 1;
+	  	font-size: $font-size-base * 0.65;
+	  	font-weight: 500;
+	  	color: #343a40;
+		  text-transform: uppercase;
+  	}
+  }
+
+	.form-text {
+    padding: 0;
+    line-height: $input-btn-line-height;
+    letter-spacing: 0.02rem;
+	  font-size: 0.65rem;
+  }
+
+  .invalid-feedback {
+	  position: absolute;
+	  bottom: 0;
+    margin: 0;
+	  margin-bottom: $input-custom-spacing * -1.25;
+    padding: 0;
+    line-height: $input-btn-line-height;
+    letter-spacing: 0.02rem;
+	  font-size: 0.6rem;
+	  text-transform: uppercase;
+  }
+}
+
+.text-small {
+	font-size: $small-font-size;
+}

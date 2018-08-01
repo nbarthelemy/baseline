@@ -1,0 +1,51 @@
+<div class="text-center mb-4">
+  <h1 class="h2 mb-2">Start creating immediately</h1>
+  <span>Delight your team and customers with Wingman</span>
+</div>
+<div class="row no-gutters justify-content-center">
+  <%= bootstrap_form_for(resource, as: resource_name, url: registration_path) do |f| %>
+    <!--
+    <%= devise_error_messages! %>
+    -->
+
+    <div class="form-row">
+      <div class="col">
+        <%= f.text_field :first_name, autofocus: true, autocomplete: "first_name" %>
+      </div>
+      <div class="col">
+        <%= f.text_field :last_name, autofocus: true, autocomplete: "last_name" %>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="col">
+        <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="col">
+        <%= f.password_field :password, autocomplete: "off",
+          help: @minimum_password_length ? "Your password must be at least #{@minimum_password_length} characters" : nil %>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="col">
+        <%= f.password_field :password_confirmation, autocomplete: "off" %>
+      </div>
+    </div>
+    <div class="form-row my-2">
+      <div class="col">
+        <%= f.submit "Create Account", class: 'btn btn-block btn-success btn-lg' %>
+      </div>
+    </div>
+    <div class="text-center">
+      <span class="text-small text-muted">
+        By clicking 'Create Account' you agree to our <a href="#">Terms</a>,
+        <a href="#">Privacy Policy</a>&nbsp;and <a href="#">Security Policy</a>
+      </span>
+    </div>
+
+  <% end %>
+</div>
+<!--
+<%= render "devise/shared/links" %>
+-->

@@ -1,0 +1,9 @@
+<% head do %>
+  <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+<% end %>
+<%= body do %>
+  <% breadcrumb route_name unless route_name.nil? or @_gretel_renderer.present? %>
+  <%= render partial: 'layouts/partials/application_header' %>
+  <%= yield %>
+  <% before_body_end javascript_pack_tag 'application' %>
+<% end %>

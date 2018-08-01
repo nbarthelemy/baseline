@@ -1,0 +1,124 @@
+<%= bootstrap_form_for @onboarding, url: onboarding_path, html: { class: 'wizard' } do |f| %>
+  <ul class="nav nav-tabs text-center row justify-content-center">
+    <li class="col-3 col-md-2"><a href="#first" class="step-circle step-circle-sm">1</a>
+    </li>
+    <li class="col-3 col-md-2"><a href="#second" class="step-circle step-circle-sm">2</a>
+    </li>
+    <li class="col-3 col-md-2"><a href="#third" class="step-circle step-circle-sm">3</a>
+    </li>
+    <li class="col-3 col-md-2"><a href="#fourth" class="step-circle step-circle-sm">4</a>
+    </li>
+  </ul>
+  <div class="tab-content">
+    <div id="first">
+      <div class="row justify-content-around align-items-center">
+        <div class="col-8 col-md-6 col-lg-4 mb-4">
+          <img alt="Image" src="<%= asset_pack_path 'images/wingman/graphic-man-box.svg' %>" class="w-100" />
+        </div>
+        <!--end of col-->
+        <div class="col-12 col-md-6 col-lg-5 mb-4">
+          <div>
+            <h6 class="title-decorative mb-2">Step 1.</h6>
+            <h4 class="mb-2">Enter some text</h4>
+            <p>This is especially important so make it memorable</p>
+
+            <%= f.text_field :name, class: 'form-control-lg', autocomplete: 'off' %>
+            <%= f.email_field :email, class: 'form-control-lg', autocomplete: 'off' %>
+
+          </div>
+          <button class="btn btn-success sw-btn-next" type="button">Next Step</button>
+        </div>
+        <!--end of col-->
+      </div>
+      <!--end of row-->
+    </div>
+    <div id="second">
+      <div class="row justify-content-around align-items-center">
+        <div class="col-8 col-md-6 col-lg-4 mb-4">
+          <img alt="Image" src="<%= asset_pack_path 'images/wingman/graphic-woman-writing.svg' %>" class="w-100" />
+        </div>
+        <!--end of col-->
+        <div class="col-12 col-md-6 col-lg-5 mb-4">
+          <div>
+            <h6 class="title-decorative mb-2">Step 2.</h6>
+            <h4>Flick some switches</h4>
+            <div>
+              <div class="custom-control custom-checkbox custom-checkbox-switch">
+                <input type="checkbox" class="custom-control-input" value="box-1" name="box-1" checked id="switch-photography">
+                <label class="custom-control-label" for="switch-photography">Photography</label>
+              </div>
+            </div>
+            <div>
+              <div class="custom-control custom-checkbox custom-checkbox-switch">
+                <input type="checkbox" class="custom-control-input" value="box-2" name="box-2" id="switch-graphic">
+                <label class="custom-control-label" for="switch-graphic">Graphic Design</label>
+              </div>
+            </div>
+            <div>
+              <div class="custom-control custom-checkbox custom-checkbox-switch">
+                <input type="checkbox" class="custom-control-input" value="box-3" name="box-3" id="switch-website">
+                <label class="custom-control-label" for="switch-website">Website Design</label>
+              </div>
+            </div>
+          </div>
+          <button class="btn btn-success sw-btn-next mt-4" type="button">Next Step</button>
+        </div>
+        <!--end of col-->
+      </div>
+      <!--end of row-->
+    </div>
+    <div id="third">
+      <div class="row justify-content-around align-items-center">
+        <div class="col-8 col-md-6 col-lg-4 mb-4">
+          <img alt="Image" src="<%= asset_pack_path 'images/wingman/graphic-woman-writing-2.svg' %>" class="w-100" />
+        </div>
+        <!--end of col-->
+        <div class="col-12 col-md-6 col-lg-5 mb-4">
+          <div>
+            <h6 class="title-decorative mb-2">Step 3.</h6>
+            <h4>Select an option</h4>
+            <div>
+              <div class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input" value="notify-daily" name="notify-frequency" id="notify-daily">
+                <label class="custom-control-label" for="notify-daily">Daily</label>
+              </div>
+            </div>
+            <div>
+              <div class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input" value="notify-weekly" name="notify-frequency" checked id="notify-weekly">
+                <label class="custom-control-label" for="notify-weekly">Weekly</label>
+              </div>
+            </div>
+            <div>
+              <div class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input" value="notify-monthly" name="notify-frequency" id="notify-monthly">
+                <label class="custom-control-label" for="notify-monthly">Monthly</label>
+              </div>
+            </div>
+          </div>
+          <button class="btn btn-success sw-btn-next mt-4" type="button">Next Step</button>
+        </div>
+        <!--end of col-->
+      </div>
+      <!--end of row-->
+    </div>
+    <div id="fourth">
+      <div class="row justify-content-around align-items-center">
+        <div class="col-8 col-md-6 col-lg-5 mb-4">
+          <img alt="Image" src="<%= asset_pack_path 'images/wingman/graphic-man-computer.svg' %>" class="w-100" />
+        </div>
+        <!--end of col-->
+        <div class="col-12 col-md-6 col-lg-5 mb-4">
+          <div>
+            <h6 class="title-decorative mb-2">Step 4.</h6>
+            <h4 class="mb-2">You're all set</h4>
+            <p>Well done, you've completed the process, just hit the button below to change the world.</p>
+          </div>
+          <button class="btn btn-success btn-lg mt-4" type="submit">Create Greatness</button>
+        </div>
+        <!--end of col-->
+      </div>
+      <!--end of row-->
+    </div>
+  </div>
+<% end %>

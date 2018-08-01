@@ -1,0 +1,32 @@
+<% head do %>
+  <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+<% end %>
+<%= body do %>
+  <div class="nav-container"></div>
+  <div class="main-container">
+    <section class="space-sm">
+      <div class="container align-self-start">
+        <div class="row mb-4">
+          <div class="col text-center">
+            <%= link_to app.root_url do -%>
+              <img alt="Image" src="<%= asset_pack_path 'images/wingman/logo-gray.svg' %>" />
+            <%- end %>
+          </div>
+        </div>
+        <div class="row justify-content-center">
+          <div class="col-12 col-md-8 col-lg-7">
+            <div class="card card-lg text-center">
+              <div class="card-body">
+                <%= yield %>
+              </div>
+            </div>
+            <div class="text-center">
+              <%= render "devise/shared/sign_up_link" %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+  <% before_body_end javascript_pack_tag 'application' %>
+<% end %>
