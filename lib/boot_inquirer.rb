@@ -23,6 +23,10 @@ class BootInquirer
       self.shared_libs + self.apps
     end
 
+    def engine(name)
+      engines.detect{|e| e.name == name.to_s }
+    end
+
     def apps
       @@apps ||= load_and_initialize_gems('../apps', BootInquirer::App)
     end
@@ -61,14 +65,9 @@ class BootInquirer
 
     def method_missing(method_name, *args)
       if method_name.to_s =~ /(.+)\?$/
-        app = apps.detect{|app| app.name == $1}
-        if app
-          app.enabled?
-        else
-          super
-        end
+        self.engine($1).try(:enabled?) || super
       else
-        super
+        self.engine(method_name) || super
       end
     end
 
@@ -98,10 +97,14 @@ class BootInquirer
       @name = File.basename(path)
     end
 
+    def namespace
+      ns = name.classify
+      ns << 's' if name[-1] == 's'
+      ns
+    end
+
     def engine
-      module_name = name.classify
-      module_name << 's' if name[-1] == 's'
-      module_name.constantize.const_get(:Engine)
+      namespace.constantize.const_get(:Engine)
     end
 
     def assets_required?
@@ -116,10 +119,28 @@ class BootInquirer
       File.join(path, "#{name}.gemspec")
     end
 
+    def models
+      re = /^#{namespace}::/
+
+      if Rails.env.development?
+        Rails.configuration.eager_load_namespaces.select do |ns|
+          re.match?(ns.to_s)
+        end.each(&:eager_load!)
+      end
+
+      ApplicationRecord.descendants.select do |klass|
+        re.match?(klass.to_s)
+      end
+    end
+
     def dependencies
-      @dependencies ||= File.foreach(gemspec).
-        grep(BootInquirer::DEPENDENCY_REGEXP).collect do |line|
-          BootInquirer::DEPENDENCY_REGEXP.match(line)[1]
+      @dependencies ||= begin
+        deps = File.foreach(gemspec).
+          grep(BootInquirer::DEPENDENCY_REGEXP).collect do |line|
+            BootInquirer::DEPENDENCY_REGEXP.match(line)[1]
+        end
+        libs = BootInquirer.shared_libs.collect(&:name)
+        deps.select{|dep| libs.include?(dep) }
       end
     end
 
@@ -132,9 +153,8 @@ class BootInquirer
   class SharedLib < Engine
 
     def enabled?
-      deps = []
-      BootInquirer.enabled(:apps).each do |app|
-        deps << app.dependencies
+      deps = BootInquirer.enabled(:apps).collect do |app|
+        app.dependencies
       end
       deps.flatten.include?(name)
     end
@@ -145,6 +165,26 @@ class BootInquirer
 
     def enabled?
       BootInquirer.boot_flag?(@key)
+    end
+
+    # Using this method requires config.eager_load to be set to true
+    def derive_models_from_dependencies
+      dependencies.each do |dep|
+        BootInquirer.engine(dep).models.each do |m|
+          subclass_name = m.to_s.sub(/^[^:]+/, namespace)
+          unless /ApplicationRecord/.match?(m.to_s) || Object.const_defined?(subclass_name)
+            modules = subclass_name.split('::')
+            klass = modules.pop
+            ns = modules.inject('') do |ns, mod|
+              obj = ns == '' ? Object : ns.constantize
+              obj.const_set(mod, Module.new) unless obj.const_defined?(mod)
+              ns << "::#{mod}"
+            end
+            ns.constantize.const_set klass, Class.new(m)
+          end
+        end
+      end
+      models
     end
 
   end

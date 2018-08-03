@@ -10,7 +10,7 @@ module Api::V1
 
 	  # GET /v1/users
 	  def index
-	    render json: User.all
+	    render json: Api::User.all
 	  end
 
   end

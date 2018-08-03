@@ -23,8 +23,8 @@ Dotenv::Railtie.load
 # require railties and engines here.
 require_relative "../lib/boot_inquirer"
 
-BootInquirer.enabled(:engines).each do |app|
-  require app.name
+BootInquirer.enabled(:engines).each do |engine|
+  require engine.name
 end
 
 module Baseline
@@ -43,6 +43,12 @@ module Baseline
     # config.generators do |g|
     #   g.assets false
     # end
+
+    config.after_initialize do
+      BootInquirer.enabled(:apps).each do |app|
+        app.derive_models_from_dependencies
+      end
+    end
 
   end
 end

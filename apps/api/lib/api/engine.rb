@@ -1,6 +1,7 @@
 require 'rack/cors'
 require 'rack/attack'
 require 'fast_jsonapi'
+require 'swagger/docs'
 require 'core'
 
 module Api
