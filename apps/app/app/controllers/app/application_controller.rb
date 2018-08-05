@@ -3,24 +3,5 @@ module App
 
     protect_from_forgery prepend: true
 
-    before_action :configure_permitted_parameters, if: :devise_controller?
-
-    BootInquirer.enabled(:engines).each do |engine|
-      helper engine.engine.helpers
-    end
-
-  protected
-
-    def configure_permitted_parameters
-      devise_parameter_sanitizer.permit(:sign_up,
-        keys: [ :username, :email, :password, :password_confirmation ])
-
-      devise_parameter_sanitizer.permit(:sign_in, keys:
-        [ :login, :password, :password_confirmation ])
-
-      devise_parameter_sanitizer.permit(:account_update,
-        keys: [ :username, :email, :password, :password_confirmation, :current_password ])
-    end
-
   end
 end

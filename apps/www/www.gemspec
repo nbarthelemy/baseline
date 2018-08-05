@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
   s.summary     = "Summary of Www."
   s.description = "Description of Www."
 
-  s.files = Dir["{app,config,db,lib}/**/*", "README.md"]
+  s.files = Dir["{app,config,db,lib}/**/*", "Rakefile", "README.md"]
 
   s.add_dependency "rails", "~> 5.2.0"
 

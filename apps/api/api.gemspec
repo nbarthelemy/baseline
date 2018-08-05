@@ -9,11 +9,10 @@ Gem::Specification.new do |s|
   s.version     = Api::VERSION
   s.authors     = ["Nick Barthelemy"]
   s.email       = ["nicholas.barthelemy@gmail.com"]
-  s.homepage    = ""
   s.summary     = "Summary of Api."
   s.description = "Description of Api."
 
-  s.files = Dir["{app,config,db,lib}/**/*", "README.md"]
+  s.files = Dir["{app,config,db,lib}/**/*", "Rakefile", "README.md"]
 
   s.add_dependency "rails", "~> 5.2.0"
 
@@ -25,6 +24,9 @@ Gem::Specification.new do |s|
 
   # Blocking & throttling See: https://github.com/kickstarter/rack-attack
   s.add_dependency "rack-attack"
+
+  # Use Redis adapter for caching and throttling
+  s.add_dependency 'redis', '~> 4.0'
 
   # Documentation. See: https://github.com/kickstarter/rack-attack
   s.add_dependency "swagger-docs"

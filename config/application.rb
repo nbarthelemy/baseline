@@ -1,7 +1,6 @@
 require_relative 'boot'
 
 require "rails"
-# Pick the frameworks you want:
 require "active_model/railtie"
 require "active_job/railtie"
 require "active_record/railtie"
@@ -9,8 +8,8 @@ require "active_storage/engine"
 require "action_controller/railtie"
 require "action_mailer/railtie"
 require "action_view/railtie"
-require "action_cable/engine"
-# require "sprockets/railtie"
+# require "action_cable/engine"
+require "sprockets/railtie" if BootInquirer.assets_required?
 require "rails/test_unit/railtie"
 
 # Require the gems listed in Gemfile, including any gems
@@ -24,7 +23,7 @@ Dotenv::Railtie.load
 require_relative "../lib/boot_inquirer"
 
 BootInquirer.enabled(:engines).each do |engine|
-  require engine.name
+  require engine.require_path
 end
 
 module Baseline
@@ -39,10 +38,20 @@ module Baseline
     # the framework and any gems in your application.
 
     # Disable the asset pipline ( Sprockets )
-    # config.assets.enabled = false
-    # config.generators do |g|
-    #   g.assets false
-    # end
+    if config.respond_to?(:assets)
+      config.assets.enabled = BootInquirer.assets_required?
+    end
+
+    # do not generate assets
+    config.generators do |g|
+      g.assets false
+    end
+
+    config.to_prepare do
+      BootInquirer.enabled(:apps).each do |app|
+        app.derive_models_from_dependencies
+      end
+    end
 
     config.after_initialize do
       BootInquirer.enabled(:apps).each do |app|

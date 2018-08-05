@@ -1,5 +1,8 @@
 module Api::V1
   class ApiController < Api::ApplicationController
-  	# Generic API stuff here
+
+    include Api::ResponseRenderers
+    include Api::SwaggerDocs
+
   end
 end

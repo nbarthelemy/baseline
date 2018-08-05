@@ -26,12 +26,10 @@ Gem::Specification.new do |s|
   # Make forms suck less. See: https://github.com/bootstrap-ruby/bootstrap_form
   s.add_dependency 'bootstrap_form', '>= 4.0.0.alpha1'
 
-  # User authentication
-  s.add_dependency 'devise'
-
   #### Shared Engine Gems ####
 
   s.add_dependency "core"
   s.add_dependency "ui"
+  #s.add_dependency "sso-client"
 
 end

@@ -77,7 +77,7 @@ class BootInquirer
       full_path = File.expand_path(path, __dir__)
 
       gems = Dir.entries(full_path).select do |dir|
-        dir.match?(/^[a-z][a-z0-9_]+$/)
+        dir.match?(/^[a-z][a-z0-9_-]+$/)
       end
 
       gems.map do |gem_name|
@@ -98,13 +98,17 @@ class BootInquirer
     end
 
     def namespace
-      ns = name.classify
+      ns = name_parts.collect(&:classify).join('::')
       ns << 's' if name[-1] == 's'
       ns
     end
 
     def engine
       namespace.constantize.const_get(:Engine)
+    end
+
+    def require_path
+      name_parts.join('/')
     end
 
     def assets_required?
@@ -120,16 +124,16 @@ class BootInquirer
     end
 
     def models
-      re = /^#{namespace}::/
+      @models ||= begin
+        re = /^#{namespace}::/
 
-      if Rails.env.development?
         Rails.configuration.eager_load_namespaces.select do |ns|
           re.match?(ns.to_s)
         end.each(&:eager_load!)
-      end
 
-      ApplicationRecord.descendants.select do |klass|
-        re.match?(klass.to_s)
+        ApplicationRecord.descendants.select do |klass|
+          re.match?(klass.to_s)
+        end
       end
     end
 
@@ -146,6 +150,12 @@ class BootInquirer
 
     def enabled?
       true
+    end
+
+  private
+
+    def name_parts
+      name.split(/[^a-z0-9]/i)
     end
 
   end

@@ -1,10 +1,13 @@
 *.rbc
 capybara-*.html
 .rspec
-/log
-/tmp
-/db/*.sqlite3
-/db/*.sqlite3-journal
+.vscode
+log/
+tmp/
+storage/
+pkg/
+db/*.sqlite3
+db/*.sqlite3-journal
 /public/system
 /coverage/
 /spec/tmp
@@ -19,12 +22,8 @@ config/master.key
 # Only include if you have production secrets in this file, which is no longer a Rails default
 # config/secrets.yml
 
-# dotenv
-# TODO Comment out this rule if environment variables can be committed
-.env
-
 ## Environment normalization:
-/.bundle
+.bundle
 /vendor/bundle
 
 # these should all be checked in to normalize the environment:
@@ -48,9 +47,17 @@ bower.json
 node_modules/
 /public/packs
 /public/packs-test
-/node_modules
+node_modules
 yarn-debug.log*
+yarn-error.log*
 .yarn-integrity
 
 # Do not commit asset management files
 /assets
+
+# ignore swagger docs
+/public/apidocs/
+/public/swagger
+
+# ignore the app directory because all of the code should be in the apps
+/app

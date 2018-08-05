@@ -5,5 +5,9 @@ Api::Engine.routes.draw do
       resources :users
 
     end
+
+    # convenience route for swagger docs
+    get '/docs' => redirect('/swagger/dist/index.html?url=/apidocs/api-docs.json')
+
   end
 end

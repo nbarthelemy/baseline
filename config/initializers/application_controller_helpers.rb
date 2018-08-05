@@ -1,7 +1,14 @@
+# For each application load all of it's dependencies helpers
 Rails.application.config.after_initialize do
-  ActionController::Base.class_eval do
-    BootInquirer.enabled(:engines).each do |engine|
-      helper engine.engine.helpers
+  BootInquirer.enabled(:apps).each do |app|
+    app.dependencies.each do |dep|
+      # begin
+        "#{app.namespace}::ApplicationController".constantize.class_eval do
+          helper BootInquirer.engine(dep).engine.helpers
+        end
+      # rescue NameError => e
+      #   Rails.logger.warn e.message
+      # end
     end
   end
 end
