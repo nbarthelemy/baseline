@@ -1,13 +1,13 @@
 # This determines which engines to boot / mount within the operator app (v3).
 # The boot flag is a collection of characters representing the different engines in this project
 # For example:
-#   ~> ENGINE_BOOT=am bundle exec rails c
-#   => will boot the account and marketing engines - but not content, admin, etc.
+#   ~> ENGINE_BOOT=api bundle exec rails c
+#   => will boot the api engines - but none of the others
 #
 # The boot flag can be negated to have the opposite effect.
 # For example:
-#   ~> ENGINE_BOOT=-m bundle exec rails c
-#   => will boot all engines except marketing
+#   ~> ENGINE_BOOT=-api bundle exec rails c
+#   => will boot all engines except api
 #
 # The boot flag characters are not necessarily the first letter of each engine name, so check this file if you're using boot flags.
 #
@@ -19,20 +19,20 @@ class BootInquirer
 
   class << self
 
-    def engines
-      self.shared_libs + self.apps
-    end
-
-    def engine(name)
-      engines.detect{|e| e.name == name.to_s }
-    end
-
     def apps
       @@apps ||= load_and_initialize_gems('../apps', BootInquirer::App)
     end
 
     def shared_libs
       @@shared_libs ||= load_and_initialize_gems('../apps/_common', BootInquirer::SharedLib)
+    end
+
+    def engines
+      self.shared_libs + self.apps
+    end
+
+    def engine(name)
+      engines.detect{|e| e.name == name.to_s }
     end
 
     def enabled(collection = :engines)
@@ -50,7 +50,7 @@ class BootInquirer
     end
 
     def boot_flag
-      @@boot_flag ||= ENV['ENGINE_BOOT']
+      ENV['ENGINE_BOOT']
     end
 
     def negate?

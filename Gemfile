@@ -34,7 +34,7 @@ group :development, :test do
   gem 'pry-rails'
 
   # becsause we want to use pow. See: https://coderwall.com/p/sreazq/using-pry-with-pow
-  gem 'pry-remote'
+  #gem 'pry-remote'
 
   # add ability to load envronment variables. See: https://github.com/bkeepers/dotenv
   gem 'dotenv-rails'

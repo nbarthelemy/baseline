@@ -1,4 +1,5 @@
 require_relative 'boot'
+require_relative "../lib/boot_inquirer"
 
 require "rails"
 require "active_model/railtie"
@@ -9,7 +10,6 @@ require "action_controller/railtie"
 require "action_mailer/railtie"
 require "action_view/railtie"
 # require "action_cable/engine"
-require "sprockets/railtie" if BootInquirer.assets_required?
 require "rails/test_unit/railtie"
 
 # Require the gems listed in Gemfile, including any gems
@@ -19,9 +19,12 @@ Bundler.require(*Rails.groups)
 # load the environment variables
 Dotenv::Railtie.load
 
-# require railties and engines here.
-require_relative "../lib/boot_inquirer"
+# Load sprockets if assets are required
+if BootInquirer.assets_required?
+  require "sprockets/railtie"
+end
 
+# require the enabled engines
 BootInquirer.enabled(:engines).each do |engine|
   require engine.require_path
 end
@@ -37,14 +40,17 @@ module Baseline
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
 
-    # Disable the asset pipline ( Sprockets )
-    if config.respond_to?(:assets)
-      config.assets.enabled = BootInquirer.assets_required?
-    end
+    # Enable the asset pipline ( Sprockets ) if assets are required
+    if BootInquirer.assets_required?
+      config.assets.enabled = true
 
-    # do not generate assets
-    config.generators do |g|
-      g.assets false
+      # do not generate assets
+      config.generators do |g|
+        g.assets false
+      end
+    else
+      # assume api_only mode if we are not serving assets
+      config.api_only = true
     end
 
     config.to_prepare do
