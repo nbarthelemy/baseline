@@ -53,6 +53,17 @@ module Baseline
       config.api_only = true
     end
 
+    # For each application load all of it's dependencies helper
+    config.before_initialize do
+      BootInquirer.enabled(:apps).each do |app|
+        app.dependencies.each do |dep|
+          "#{app.namespace}::ApplicationController".constantize.class_eval do
+            helper BootInquirer.engine(dep).engine.helpers
+          end
+        end
+      end
+    end
+
     config.to_prepare do
       BootInquirer.enabled(:apps).each do |app|
         app.derive_models_from_dependencies
