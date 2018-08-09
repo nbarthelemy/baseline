@@ -54,27 +54,12 @@ module Baseline
     end
 
     # For each application load all of it's dependencies helper
-    config.before_initialize do
-      BootInquirer.enabled(:apps).each do |app|
-        app.dependencies.each do |dep|
-          "#{app.namespace}::ApplicationController".constantize.class_eval do
-            helper BootInquirer.engine(dep).engine.helpers
-          end
-        end
-      end
-    end
+    config.to_prepare { BootInquirer.load_enabled_app_helpers }
+    config.before_initialize { BootInquirer.load_enabled_app_helpers }
 
-    config.to_prepare do
-      BootInquirer.enabled(:apps).each do |app|
-        app.derive_models_from_dependencies
-      end
-    end
-
-    config.after_initialize do
-      BootInquirer.enabled(:apps).each do |app|
-        app.derive_models_from_dependencies
-      end
-    end
+    # derive unsubclassed models from dependencies
+    config.to_prepare { BootInquirer.derive_enabled_app_models }
+    config.after_initialize { BootInquirer.derive_enabled_app_models }
 
   end
 end

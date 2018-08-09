@@ -24,7 +24,7 @@ class BootInquirer
     end
 
     def shared_libs
-      @@shared_libs ||= load_and_initialize_gems('../apps/_common', BootInquirer::SharedLib)
+      @@shared_libs ||= load_and_initialize_gems('../apps/_gems', BootInquirer::SharedLib)
     end
 
     def engines
@@ -47,6 +47,14 @@ class BootInquirer
       enabled(:engines).select(&:assets_required?).each do |engine|
         yield engine
       end
+    end
+
+    def load_enabled_app_helpers
+      enabled(:apps).map(&:load_helpers)
+    end
+
+    def derive_enabled_app_models
+      enabled(:apps).map(&:derive_models_from_dependencies)
     end
 
     def boot_flag
@@ -145,6 +153,14 @@ class BootInquirer
         end
         libs = BootInquirer.shared_libs.collect(&:name)
         deps.select{|dep| libs.include?(dep) }
+      end
+    end
+
+    def load_helpers
+      dependencies.each do |dep|
+        "#{namespace}::ApplicationController".constantize.class_eval do
+          helper BootInquirer.engine(dep).engine.helpers
+        end
       end
     end
 

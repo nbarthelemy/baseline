@@ -30,6 +30,6 @@ Gem::Specification.new do |s|
 
   s.add_dependency "core"
   s.add_dependency "ui"
-  #s.add_dependency "sso-client"
+  s.add_dependency "identity"
 
 end

@@ -1,0 +1,14 @@
+default: &default
+  name: Baseline App
+  redirect_uri: http://app.baseline.test/oauth/callback
+  uid: 631961173e1404e9d67999a13bc1d9e2389e7cd726a3f93f04803e57991b23ba
+  secret: 7a202f5f67bb7bb54c413016f103d20a254f0ef9f1ae70851b10949419200145
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+
+production:
+  <<: *default

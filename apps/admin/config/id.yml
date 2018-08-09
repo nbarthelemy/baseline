@@ -1,0 +1,14 @@
+default: &default
+  name: Baseline Admin
+  redirect_uri: http://admin.baseline.test/oauth/callback
+  uid: a2a47e98c5771f7daccef56af06c30e56e138f14f31144dd210ada05bde07faa
+  secret: be71c196a42d7394ab97276dea874f6505f5961ba89556b82f6d8c8c98eaff5c
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+
+production:
+  <<: *default
