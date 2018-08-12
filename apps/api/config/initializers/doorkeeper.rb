@@ -1,6 +1,11 @@
 require 'doorkeeper'
+require 'devise'
 require 'devise/doorkeeper'
 
+# Configure devise for use with Doorkeeper
+Devise::Doorkeeper.configure_devise(Devise)
+
+# configure Doorkeeper
 Doorkeeper.configure do
   Devise::Doorkeeper.configure_doorkeeper(self)
 
@@ -9,12 +14,18 @@ Doorkeeper.configure do
 
   # This block will be called to check whether the resource owner is authenticated or not.
   resource_owner_authenticator do
-    # fail "Please configure doorkeeper resource_owner_authenticator block located in #{__FILE__}"
+    fail "Please configure doorkeeper resource_owner_authenticator block located in #{__FILE__}"
     # Put your resource owner authentication logic here.
     # Example implementation:
     #   User.find_by_id(session[:user_id]) || redirect_to(new_user_session_url)
+  end
 
-    current_user || warden.authenticate!(scope: :user)
+  # In this flow, a token is requested in exchange for the resource owner credentials (username and password)
+  resource_owner_from_credentials do |routes|
+    user = Api::User.find_for_database_authentication(email: params[:username])
+    if user && user.valid_for_authentication? { user.valid_password?(params[:password]) }
+      user
+    end
   end
 
   # If you want to restrict access to the web interface for adding oauth authorized applications, you need to declare the block below.
@@ -30,7 +41,7 @@ Doorkeeper.configure do
   # Access token expiration time (default 2 hours).
   # If you want to disable expiration, set this to nil.
   # access_token_expires_in 2.hours
-  access_token_expires_in 1.minute
+  access_token_expires_in 2.hours
 
   # Assign a custom TTL for implicit grants.
   # custom_access_token_expires_in do |oauth_client|
@@ -44,14 +55,15 @@ Doorkeeper.configure do
   # The controller Doorkeeper::ApplicationController inherits from.
   # Defaults to ActionController::Base.
   # https://github.com/doorkeeper-gem/doorkeeper#custom-base-controller
-  base_controller 'Id::ApplicationController'
+  base_controller 'Api::ApplicationController'
 
   # Reuse access token for the same resource owner within an application (disabled by default)
   # Rationale: https://github.com/doorkeeper-gem/doorkeeper/issues/383
   # reuse_access_token
+  reuse_access_token
 
   # Issue access tokens with refresh token (disabled by default)
-  use_refresh_token
+  # use_refresh_token
 
   # Provide support for an owner to be assigned to each registered application (disabled by default)
   # Optional parameter confirmation: true (default false) if you want to enforce ownership of
@@ -126,6 +138,8 @@ Doorkeeper.configure do
   #
   # grant_flows %w[authorization_code client_credentials]
 
+  grant_flows %w[authorization_code client_credentials password]
+
   # Hook into the strategies' request & response life-cycle in case your
   # application needs advanced customization or logging:
   #
@@ -145,7 +159,7 @@ Doorkeeper.configure do
   # end
 
   skip_authorization do |resource_owner, client|
-    client.superapp? or resource_owner.admin?
+    true
   end
 
   # WWW-Authenticate Realm (default "Doorkeeper").

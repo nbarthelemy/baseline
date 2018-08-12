@@ -1,25 +1,15 @@
 Id::Engine.routes.draw do
   scope constraints: { subdomain: 'id' } do
 
-    # Installs doorkeeper oauth routes
-    use_doorkeeper scope: :doorkeeper
+    scope module: :id do
+      root to: "sessions#new"
 
-    # Installs devise routes for user
-    devise_for :users, class_name: 'Id::User',
-      path: '', path_names: {
-        sign_in: 'login',
-        sign_out: 'logout',
-        registration: 'signup'
-      },
-      module: :devise
+      get "/auth/:provider/callback", to: "sessions#create"
+      get "/auth/failure", to: "sessions#failure"
+      get "/logout", to: "sessions#destroy", as: "logout"
 
-    namespace :api do
-      namespace :v1 do
-        get '/me' => 'credentials#me'
-      end
+      resources :identities
     end
-
-    root to: "home#index"
 
   end
 end

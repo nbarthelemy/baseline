@@ -18,6 +18,9 @@ Gem::Specification.new do |s|
   s.add_dependency "rails", "~> 5.2.0"
 
   # Use ActiveModel has_secure_password
-  s.add_dependency 'bcrypt', '~> 3.1.7'
+  # s.add_dependency 'bcrypt', '~> 3.1.7'
+
+  # Use ActiveModel has_secure_password
+  s.add_dependency 'devise'
 
 end

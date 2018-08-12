@@ -19,6 +19,11 @@ Bundler.require(*Rails.groups)
 # load the environment variables
 Dotenv::Railtie.load
 
+# set a url enviroment variable for each app
+BootInquirer.enabled(:apps).each do |app|
+  ENV["#{app.name.upcase}_URL"] = app.root_url
+end
+
 # Load sprockets if assets are required
 if BootInquirer.assets_required?
   require "sprockets/railtie"

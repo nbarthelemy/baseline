@@ -119,6 +119,14 @@ class BootInquirer
       name_parts.join('/')
     end
 
+    def root_url
+      if ENV['DOMAIN'] != ''
+        "#{ENV['FORCE_SSL'] ? 'https' : 'http'}://#{name}.#{ENV['DOMAIN']}"
+      else
+        raise 'You must set the DOMAIN in your environment'
+      end
+    end
+
     def assets_required?
       File.exists? asset_path
     end
@@ -158,8 +166,11 @@ class BootInquirer
 
     def load_helpers
       dependencies.each do |dep|
-        "#{namespace}::ApplicationController".constantize.class_eval do
-          helper BootInquirer.engine(dep).engine.helpers
+        app_controller = "#{namespace}::ApplicationController".constantize
+        if app_controller.respond_to?(:helper)
+          app_controller.class_eval do
+            helper BootInquirer.engine(dep).engine.helpers
+          end
         end
       end
     end
@@ -171,7 +182,7 @@ class BootInquirer
   private
 
     def name_parts
-      name.split(/[^a-z0-9]/i)
+      name.split(/[^a-z0-9_]/i)
     end
 
   end

@@ -17,10 +17,7 @@ Rails.application.config.content_security_policy do |policy|
 
   # Allow webpack-dev-server host as allowed origin for connect-src
   if Rails.env.development?
-    hosts = BootInquirer.enabled(:apps).collect do |app|
-      "http://#{app.name}.baseline.test"
-    end
-
+    hosts = BootInquirer.enabled(:apps).collect(&:root_url)
     policy.connect_src :self, :https, 'http://localhost:3035', 'ws://localhost:3035', *hosts
     policy.script_src :self, :https, :unsafe_eval
   else

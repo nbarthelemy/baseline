@@ -19,6 +19,12 @@ Gem::Specification.new do |s|
   # A lightning fast JSON:API serializer. See https://github.com/Netflix/fast_jsonapi
   s.add_dependency "fast_jsonapi"
 
+  # OAuth 2 provider
+  s.add_dependency 'doorkeeper'
+
+  # glue code for devise and doorkeeper ( core requires devise )
+  s.add_dependency 'devise-doorkeeper'
+
   # Cross-Origin Resource Sharing (CORS); Makes cross-origin AJAX possible.
   s.add_dependency "rack-cors"
 

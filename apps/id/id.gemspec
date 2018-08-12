@@ -16,12 +16,8 @@ Gem::Specification.new do |s|
 
   s.add_dependency "rails", "~> 5.2.0"
 
-  # OAuth 2 provider
-  s.add_dependency 'doorkeeper'
-
-  # User authentication
-  s.add_dependency 'devise'
-  s.add_dependency 'devise-doorkeeper'
+  # used to authenticate with oauth2 through the API
+  s.add_dependency "omniauth-identity"
 
   #### Shared Engine Gems ####
 

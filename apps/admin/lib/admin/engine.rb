@@ -1,6 +1,5 @@
 require "core"
 require "ui"
-require "identity"
 
 module Admin
   class Engine < ::Rails::Engine

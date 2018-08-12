@@ -1,0 +1,44 @@
+<% if current_user %>
+  <h1>User Profile</h1>
+  <p>
+    <strong>Name:</strong>
+    <%= current_user.name %>
+  </p>
+  <p>
+    <strong>Provider:</strong>
+    <%= current_user.provider %>
+  </p>
+  <p>
+    <strong>OmniAuth UID:</strong>
+    <%= current_user.uid %>
+  </p>
+  <p><%= link_to "Log out", logout_path %></p>
+<% else %>
+  <div class="mb-4">
+    <h1 class="h2 mb-2">Hello again</h1>
+    <span>Sign in to your account to continue</span>
+  </div>
+  <div class="row no-gutters justify-content-center">
+    <%= form_tag "/auth/identity/callback", class: 'text-left col-lg-8' do %>
+      <div class="form-group">
+        <%= label_tag :email, 'Email Address' %>
+        <%= email_field_tag :email, params[:email], autofocus: true, autocomplete: 'email',
+          class: 'form-control form-control-lg', placeholder: 'Email Address' %>
+      </div>
+      <div class="form-group">
+        <%= label_tag :password %>
+        <%= password_field_tag :password, nil, autocomplete: 'off',
+          class: 'form-control form-control-lg', placeholder: 'Enter a password' %>
+        <!-- %= render "devise/shared/password_reset_link" % -->
+      </div>
+      <div class="text-center mt-3">
+        <%= submit_tag "Log in", class: 'btn btn-lg btn-primary' %>
+      </div>
+    <% end %>
+  </div>
+
+  <p>
+    <strong>Don't use these services?</strong>
+    <%= link_to "Create an account", id.new_identity_path %> or login below.
+  </p>
+<% end %>

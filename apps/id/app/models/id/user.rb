@@ -1,19 +1,17 @@
 module Id
   class User < ::Core::User
 
-    # Include default devise modules. Others available are:
-    # :timeoutable and :omniauthable
-    devise :database_authenticatable, :registerable,
-      :recoverable, :rememberable, :trackable, :validatable,
-      :confirmable, :lockable, :doorkeeper
+    def self.from_omniauth(auth)
+      find_by_provider_and_uid(auth["provider"], auth["uid"]) || create_with_omniauth(auth)
+    end
 
-    # May also include :destroy if you need callbacks
-    has_many :access_grants, class_name: "::Doorkeeper::AccessGrant",
-      foreign_key: :resource_owner_id, dependent: :delete_all
-
-    # May also include :destroy if you need callbacks
-    has_many :access_tokens, class_name: "::Doorkeeper::AccessToken",
-      foreign_key: :resource_owner_id, dependent: :delete_all
+    def self.create_with_omniauth(auth)
+      create! do |user|
+        user.provider = auth["provider"]
+        user.uid = auth["uid"]
+        user.name = auth["info"]["name"]
+      end
+    end
 
   end
 end
