@@ -20,10 +20,10 @@ Gem::Specification.new do |s|
   # Use ActiveModel has_secure_password
   # s.add_dependency 'bcrypt', '~> 3.1.7'
 
-  # Use ActiveModel has_secure_password
+  # Use devise for authentication. See: https://github.com/plataformatec/devise
   s.add_dependency 'devise'
 
-  # For resource authorization
+  # For resource authorization. See: https://github.com/varvet/pundit
   s.add_dependency 'pundit'
 
 end
