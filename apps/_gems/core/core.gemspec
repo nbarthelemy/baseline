@@ -23,4 +23,7 @@ Gem::Specification.new do |s|
   # Use ActiveModel has_secure_password
   s.add_dependency 'devise'
 
+  # For resource authorization
+  s.add_dependency 'pundit'
+
 end

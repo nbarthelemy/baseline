@@ -1,4 +1,5 @@
 require 'devise'
+require 'pundit'
 
 module Core
   class Engine < ::Rails::Engine
