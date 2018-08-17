@@ -1,9 +1,8 @@
 module Api
-  class ApplicationController < ActionController::API
+  class ApplicationController < Core::ApiController
+    include Api::SwaggerDocs
 
     before_action :doorkeeper_authorize!
-
-    respond_to :json
 
   protected
 
