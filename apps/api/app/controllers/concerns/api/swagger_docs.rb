@@ -23,7 +23,7 @@ module Api
       def setup_basic_api_documentation
         [ :index, :show, :create, :update, :delete ].each do |api_action|
           swagger_api api_action do
-            param :header, 'Authorization', :string, :required, 'Authentication token'
+            param :header, 'Authorization', :string, :required, 'Bearer <Authentication token>'
           end
         end
       end
