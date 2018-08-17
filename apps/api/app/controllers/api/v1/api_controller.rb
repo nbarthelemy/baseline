@@ -1,8 +1,6 @@
 module Api::V1
   class ApiController < Api::ApplicationController
-
-    include Api::ResponseRenderers
-    include Api::SwaggerDocs
+    include Api::V1::ResponseRenderers
 
   end
 end
