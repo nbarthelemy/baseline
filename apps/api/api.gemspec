@@ -28,13 +28,20 @@ Gem::Specification.new do |s|
   # Cross-Origin Resource Sharing (CORS); Makes cross-origin AJAX possible.
   s.add_dependency "rack-cors"
 
-  # Blocking & throttling See: https://github.com/kickstarter/rack-attack
-  s.add_dependency "rack-attack"
-
   # Use Redis adapter for caching and throttling
   s.add_dependency 'redis', '~> 4.0'
 
-  # Documentation. See: https://github.com/kickstarter/rack-attack
+  # lightning fast redis client
+  s.add_dependency 'hiredis'
+
+  # Helps to keep thing organized using namespaces in Redis
+  s.add_dependency 'redis-namespace'
+
+  # Use a middleware based throttling mechanism
+  s.add_dependency 'rack'
+  s.add_dependency 'rack-throttle'
+
+  # Documentation.
   s.add_dependency "swagger-docs"
 
   #### Shared Engine Gems ####

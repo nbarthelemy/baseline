@@ -3,6 +3,7 @@ PATH
   specs:
     core (0.1.0)
       devise
+      pundit
       rails (~> 5.2.0)
 
 PATH
@@ -31,10 +32,13 @@ PATH
       devise-doorkeeper
       doorkeeper
       fast_jsonapi
-      rack-attack
+      hiredis
+      rack
       rack-cors
+      rack-throttle
       rails (~> 5.2.0)
       redis (~> 4.0)
+      redis-namespace
       swagger-docs
 
 PATH
@@ -144,7 +148,7 @@ GEM
     coffee-script-source (1.12.2)
     concurrent-ruby (1.0.5)
     crass (1.0.4)
-    devise (4.4.3)
+    devise (4.5.0)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
       railties (>= 4.1.0, < 6.0)
@@ -172,6 +176,7 @@ GEM
     gretel (3.0.9)
       rails (>= 3.1.0)
     hashie (3.5.7)
+    hiredis (0.6.1)
     i18n (1.1.0)
       concurrent-ruby (~> 1.0)
     io-like (0.3.0)
@@ -223,14 +228,17 @@ GEM
       pry (>= 0.10.4)
     public_suffix (3.0.2)
     puma (3.12.0)
+    pundit (2.0.0)
+      activesupport (>= 3.0.0)
     rack (2.0.5)
-    rack-attack (5.4.0)
-      rack (>= 1.0, < 3)
     rack-cors (1.0.2)
     rack-proxy (0.6.4)
       rack
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
+    rack-throttle (0.5.0)
+      bundler (>= 1.0.0)
+      rack (>= 1.0.0)
     rails (5.2.1)
       actioncable (= 5.2.1)
       actionmailer (= 5.2.1)
@@ -259,7 +267,9 @@ GEM
     rb-fsevent (0.10.3)
     rb-inotify (0.9.10)
       ffi (>= 0.5.0, < 2)
-    redis (4.0.1)
+    redis (4.0.2)
+    redis-namespace (1.6.0)
+      redis (>= 3.0.4)
     responders (2.4.0)
       actionpack (>= 4.2.0, < 5.3)
       railties (>= 4.2.0, < 5.3)

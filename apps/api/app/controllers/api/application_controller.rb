@@ -1,10 +1,5 @@
 module Api
   class ApplicationController < ActionController::API
-    # include ActionController::HttpAuthentication::Token::ControllerMethods
-    include ActionController::RequestForgeryProtection
-
-    # include Api::TokenThrottleable
-    # include Api::TokenAuthenticatable
 
     before_action :doorkeeper_authorize!
 
