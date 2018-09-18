@@ -30,6 +30,9 @@ gem 'puma', '~> 3.11'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 
+# background job processing
+gem 'sidekiq'
+
 group :development, :test do
   gem 'pry-rails'
 
