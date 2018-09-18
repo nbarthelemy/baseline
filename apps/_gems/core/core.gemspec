@@ -23,7 +23,13 @@ Gem::Specification.new do |s|
   # Use devise for authentication. See: https://github.com/plataformatec/devise
   s.add_dependency 'devise'
 
+  # Send Devise's emails in background. See: https://github.com/mhfs/devise-async
+  s.add_dependency 'devise-async'
+
   # For resource authorization. See: https://github.com/varvet/pundit
   s.add_dependency 'pundit'
+
+  # for handling name formatting. See: https://github.com/basecamp/name_of_person
+  s.add_dependency 'name_of_person'
 
 end

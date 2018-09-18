@@ -1,5 +1,7 @@
 require 'devise'
+require 'devise/async'
 require 'pundit'
+require 'name_of_person'
 
 module Core
   class Engine < ::Rails::Engine
