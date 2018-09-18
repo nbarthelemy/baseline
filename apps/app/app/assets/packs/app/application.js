@@ -1,13 +1,11 @@
 /* eslint no-console:0 */
 
 import Rails from 'rails-ujs';
-import Turbolinks from 'turbolinks';
 
 Rails.start();
-Turbolinks.start();
 
 import 'javascripts/wingman/index'
-import 'stylesheets/application'
+import 'stylesheets/app/application'
 
 $(function(){
 	$('.form-control').on('focus blur', function (e){
