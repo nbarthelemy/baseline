@@ -37,10 +37,6 @@ Gem::Specification.new do |s|
   # Helps to keep thing organized using namespaces in Redis
   s.add_dependency 'redis-namespace'
 
-  # Use a middleware based throttling mechanism
-  s.add_dependency 'rack'
-  s.add_dependency 'rack-throttle'
-
   # Documentation.
   s.add_dependency "swagger-docs"
 
