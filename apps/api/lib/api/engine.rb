@@ -11,11 +11,5 @@ module Api
 
   class Engine < ::Rails::Engine
     engine_name :api
-
-    initializer "Load rate limiting middleware" do |app|
-      # Use middlware for rate limiting; Puts it as high as you can in the middleware stack
-      app.middleware.insert_after Rack::Runtime, Api::DailyRateLimit
-    end
-
   end
 end
