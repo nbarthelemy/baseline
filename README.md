@@ -1,3 +1,6 @@
+# Baseline [![CircleCI](https://circleci.com/gh/nbarthelemy/baseline.svg?style=svg&circle-token=ebf6c2a99466e003bc441836d640af2246dd75d3)](https://circleci.com/gh/nbarthelemy/baseline)
+
+
 React on Rails with Test Suite (Karma, Jasmine, Enzyme, PhantomJS)
 https://gist.github.com/andrewprogers/65f0228c262fbe8e1efe767527540aec
 
